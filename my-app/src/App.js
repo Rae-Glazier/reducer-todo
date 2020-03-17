@@ -14,26 +14,24 @@ import TodoList from './components/ToDoList';
 
 const data = [
     {
-      task: 'U3-S1-D1: React-Todo',
+      task: 'U3-S2-D1: Reducer React-Todo',
       id: 1528817077286,
       completed: false
     },
     {
-      task: 'U3-S1-D2: Lecture',
+      task: 'U3-S2-D1: Lecture',
       id: 1528817084358,
       completed: false
     },
     {
-      task: 'U3-S1-D2: React Github User Card',
+      task: 'U3-S2-D1: Learn Reducer',
       id: 1528817084498,
       completed: false
     }
 ];
 
 class App extends React.Component {
-  // you will need a place to store your state in this component.
-  // design `App` to be the parent component of your application.
-  // this component is going to take care of state, and any change handlers you need to work with your state
+  
   constructor(){
     super();
     this.state = {
