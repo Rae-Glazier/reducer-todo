@@ -1,10 +1,11 @@
-import React from 'react';
+import React, {useReducer} from 'react';
 // import logo from './logo.svg';
 import './App.css';
 
 //components
 import TodoForm from './components/ToDoForm';
 import TodoList from './components/ToDoList';
+import { initialState, reducer } from './reducers/todoReducer'
 
 //what do i need for the todo app?
 //form 
@@ -12,86 +13,43 @@ import TodoList from './components/ToDoList';
 //clear button
 //reducer functions
 
-const data = [
-    {
-      task: 'U3-S2-D1: Reducer React-Todo',
-      id: 1528817077286,
-      completed: false
-    },
-    {
-      task: 'U3-S2-D1: Lecture',
-      id: 1528817084358,
-      completed: false
-    },
-    {
-      task: 'U3-S2-D1: Learn Reducer',
-      id: 1528817084498,
-      completed: false
+function App() {
+  const [state, dispatch] = useReducer(reducer, initialState)
+  console.log(state)
+  const addTodo = (input) => {
+    const newTodo = {
+      todo: input,
+      completed: false,
+      id: Math.random()
     }
-];
-
-class App extends React.Component {
-  
-  constructor(){
-    super();
-    this.state = {
-      todos: data,
-      name: ''
-    }
+    dispatch({type: "ADD_TODO", payload: newTodo})
   }
 
-  toggleCompleted = clickedItemId => {
-
-    this.setState({
-      todos: this.state.todos.map(item => {
-        if (item.id === clickedItemId) {
-          return {
-            ...item,
-            completed: !item.completed
-          };
-        } else {
-          return item;
-        }
-      })
-    });
-  };
-
-  clearCompleted = () =>{
-    this.setState({
-      todos: this.state.todos.filter(todo => {
-        return !todo.completed;
-      })
-    })
+  const handleComplete = (id) => {
+    dispatch({type:"COMPLETED_TODO", payload: id})
   }
 
-  addItem = itemName => {
-    this.setState({
-      todos: [
-        ...this.state.todos,
-        {
-          task: itemName,
-          id: Date.now(),
-          completed: false
-        }
-      ]
-    })
-  };
+  const clearCompleted = () => {
+    dispatch({type: "CLEAR_COMPLETED_TODO"})
+  }
 
-  render() {
-    return (
-      <div className="App">
-        <div className="header">
-        <h2> Rae's List of Stuff</h2>
-        <TodoForm 
-          addItem={this.addItem}
-          />
-        </div>
-        <TodoList todos={this.state.todos}
-          toggleCompleted={this.toggleCompleted}
-          clearCompleted={this.clearCompleted}
-          />
+  return (
+    <div className="App">
+      <div className='header'>
+        <h1> Rae's Reducer To-Do </h1>
+        <TodoForm addTodo={addTodo} />
       </div>
-    );
-  }
+      
+      <div className='todo-list'>
+        <TodoList state={state} handleComplete={handleComplete} />
+      </div>
+      
+      <button onClick={(e) => {
+        e.preventDefault()
+        clearCompleted()
+      }}>Clear</button>
+    </div>
+  );
 }
+
 export default App;

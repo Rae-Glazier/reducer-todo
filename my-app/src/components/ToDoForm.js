@@ -1,22 +1,23 @@
 import React, { useState } from 'react';
 
-export const TodoForm = props => {
-    const [task, setTask] = useState('')
+const TodoForm = props => {
+    const [todo, setTodo] = useState('')
     return(
         <form onSubmit={(event)=>{
             event.preventDefault()
-            props.addTodo(task)
-            setTask('')
+            props.addTodo(todo)
+            setTodo('')
         }}>
             <input 
-                name='task'
+                name='todo'
                 placeholder='Add Task'
-                value={form}
+                value={todo}
                 onChange={(event)=>{
-                    setTask(event.target.value)
+                    setTodo(event.target.value)
                 }}
             />
-            <button type='submit'>Add Task</button>
+            <button type='submit'>Add</button>
         </form>
     )
 }
+export default TodoForm; 

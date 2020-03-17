@@ -1,22 +1,28 @@
-export const initialState = {
-  editing: false,
-  title: "new title from reducer"
-};
+export const initialState = [{
+    todo: 'Learning Reducer Functions',
+    completed: false,
+    id: Math.random()
+}]
 
-export const titleReducer = (state, action) => {
-  switch (action.type) {
-    case "TOGGLE_EDITING":
-      return {
-        ...state,
-        editing: true
-      };
-    case "UPDATE_TITLE":
-      return {
-        ...state,
-        editing: false,
-        title: action.payload
-      };
-    default:
-      return state;
-  }
-};
+export function reducer(state, action) {
+    switch(action.type) {
+        case "ADD_TODO":
+            return [
+                ...state,
+                action.payload
+            ]
+        case "COMPLETED_TODO":
+            return state.map((item) => {
+                return item.id === action.payload ?
+                {...item, completed: !item.completed} :
+                item
+            })
+        case "CLEAR_COMPLETED_TODO" :
+            return state.filter((item) => !item.completed)
+
+        default: 
+            return state
+    }
+
+
+}
